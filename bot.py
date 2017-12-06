@@ -1,7 +1,7 @@
 import telebot #pyTelegramBotAPI
 import os
 from flask import Flask, request
-import postgresql
+# import postgresql
 
 
 bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'))
@@ -29,9 +29,9 @@ def echo_message(message):
 	longitude = message.location.longitude
 	date = message.date
 
-	db = postgresql.open(os.environ.get('DATABASE_URL'))
-	ins = db.prepare("INSERT INTO items(latitude, longitude, date) VALUES ($1, $2, $3)")
-	ins(latitude, longitude, date)
+	# db = postgresql.open(os.environ.get('DATABASE_URL'))
+	# ins = db.prepare("INSERT INTO items(latitude, longitude, date) VALUES ($1, $2, $3)")
+	# ins(latitude, longitude, date)
 
     bot.reply_to(message, str(latitude) + ', ' + str(longitude))
 
@@ -42,10 +42,10 @@ def get_message():
     return "!", 200
 
 
-@server.route("/items")
-def get_items):
-	items = db.query("SELECT latitude, longitude, date FROM items ORDER BY date DESC");
-    return items
+# @server.route("/items")
+# def get_items():
+# 	items = db.query("SELECT latitude, longitude, date FROM items ORDER BY date DESC");
+#     return items
 
 
 @server.route("/")
