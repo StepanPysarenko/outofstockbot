@@ -1,4 +1,4 @@
-import telebot
+import pyTelegramBotAPI as telebot
 import os
 from flask import Flask, request
 
