@@ -1,4 +1,4 @@
-import telebot
+import telebot #pyTelegramBotAPI
 import os
 from flask import Flask, request
 
@@ -17,7 +17,7 @@ def echo_message(message):
     bot.reply_to(message, message.text)
 
 
-@server.route("hook", methods=['POST'])
+@server.route("/hook", methods=['POST'])
 def get_message():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
@@ -30,4 +30,9 @@ def webhook():
     return "!", 200
 
 
-server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
+@server.route('/helloworld')
+def hello_world():
+    return 'Hello, World!'
+
+
+server.run(host="0.0.0.0", port=os.environ.get('PORT', 17995))
