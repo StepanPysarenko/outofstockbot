@@ -24,7 +24,8 @@ def echo_message(message):
 
 @bot.message_handler(func=lambda message: True, content_types=['location'])
 def echo_message(message):
-    bot.reply_to(message, message.location.latitude + ', ' + message.location.longitude)
+    bot.reply_to(message, 
+    	str(message.location.latitude) + ', ' + str(message.location.longitude))
 
 
 @server.route("/hook", methods=['POST'])
