@@ -17,7 +17,7 @@ def echo_message(message):
     bot.reply_to(message, message.text)
 
 
-@server.route(os.environ.get('HOOK_URL'), methods=['POST'])
+@server.route("hook", methods=['POST'])
 def get_message():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
