@@ -20,10 +20,7 @@ def help(message):
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
-    # bot.reply_to(message, message.text)
-    # bot.send_message(message.chat.id, message.text)
-    bot.send_message(message.chat.id, 
-    	json.dumps(message, sort_keys=True, indent=4, separators=(',', ': ')))
+    bot.send_message(message.chat.id, message.text)
 
 
 @bot.message_handler(func=lambda message: True, content_types=['location'])
@@ -40,15 +37,13 @@ def get_message():
 
 @server.route("/set_webhook")
 def set_webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url=os.environ.get('HOOK_URL'))
-    return "!", 200
+    bot.remove_webhook()  
+    return bot.set_webhook(url=os.environ.get('HOOK_URL')), 200
 
 
 @server.route("/remove_webhook")
-def remove_webhook():
-    bot.remove_webhook()
-    return "!", 200
+def remove_webhook():   
+    return bot.remove_webhook(), 200
 
 
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 17995))
