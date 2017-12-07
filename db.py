@@ -10,12 +10,12 @@ class DbServices:
         cur = conn.cursor()
 
 
-    def create_item(params):
+    def create_item(self, params):
         cur.execute("INSERT INTO items(latitude, longitude, date) VALUES (%s, %s, %s)", 
             (params.latitude, params.longitude, params.date))
 
 
-    def query_items():
+    def query_items(self):
         cur.execute("SELECT * FROM items ORDER BY date DESC")
         return cur.fetchall()
 
