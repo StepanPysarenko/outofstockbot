@@ -2,7 +2,7 @@ import telebot
 import os
 from flask import Flask, request
 
-#from db import DataContext
+from db import DbServices
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'))
@@ -25,6 +25,12 @@ def echo_message(message):
 
 @bot.message_handler(func=lambda message: True, content_types=['location'])
 def echo_message(message):
+    db_services = DbServices()
+    db_services.create_item({
+        date = message.date, 
+        latitude = message.location.latitude,
+        longitude = message.location.longitude,
+        })
     bot.send_message(message.chat.id, 
     	str(message.location.latitude) + ', ' + str(message.location.longitude))
 
@@ -46,6 +52,12 @@ def set_webhook():
 def remove_webhook():
     bot.remove_webhook()
     return "!", 200
+
+@app.route("/items")
+    def get_results():
+    db_services = DbServices()
+    items = db_services.query_items()
+    return items, 200
 
 
 app.run(host="0.0.0.0", port=os.environ.get('PORT', 17995))
