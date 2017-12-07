@@ -2,9 +2,7 @@ import os
 import psycopg2
 
 
-class DbServices(object):
-    self.conn = None
-    self.cur = None
+class DbServices:
 
     def __init__(self):
         self.conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
