@@ -12,12 +12,12 @@ class DbServices:
 
     def create_item(params):
         cur.execute("INSERT INTO items(latitude, longitude, date) VALUES (%s, %s, %s)", 
-        	(params.latitude, params.longitude, params.date))
+            (params.latitude, params.longitude, params.date))
 
 
     def query_items():
-    	cur.execute("SELECT * FROM items ORDER BY date DESC")
-		return cur.fetchall()
+        cur.execute("SELECT * FROM items ORDER BY date DESC")
+        return cur.fetchall()
 
 
     def __del__(self):
