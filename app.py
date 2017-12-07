@@ -27,9 +27,9 @@ def echo_message(message):
 def echo_message(message):
     db_services = DbServices()
     db_services.create_item({
-        date = message.date, 
-        latitude = message.location.latitude,
-        longitude = message.location.longitude,
+        date: message.date, 
+        latitude: message.location.latitude,
+        longitude: message.location.longitude
         })
     bot.send_message(message.chat.id, 
     	str(message.location.latitude) + ', ' + str(message.location.longitude))
