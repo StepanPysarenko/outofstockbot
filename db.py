@@ -2,7 +2,7 @@ import os
 import psycopg2
 
 
-class DbServices:
+class DbServices(object):
     self.conn = None
     self.cur = None
 
