@@ -1,8 +1,9 @@
 import telebot
 import os
+import time
 from flask import Flask, request
-
 from db import DbServices
+
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'))
@@ -27,7 +28,7 @@ def echo_message(message):
 def echo_message(message):
     db_services = DbServices()
     db_services.create_item({
-        date: message.date, 
+        date: int(time.time()), 
         latitude: message.location.latitude,
         longitude: message.location.longitude
         })
