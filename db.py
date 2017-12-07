@@ -6,7 +6,7 @@ class DbServices:
 
 
     def __init__(self):
-        db = postgresql.open(os.environ.get('DATABSE_URL'))
+        db = postgresql.open(os.environ.get('DATABASE_URL'))
 
 
     def create_item(params):
