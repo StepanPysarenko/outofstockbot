@@ -54,7 +54,7 @@ def remove_webhook():
     return "!", 200
 
 @app.route("/items")
-    def get_results():
+def get_results():
     db_services = DbServices()
     items = db_services.query_items()
     return items, 200
