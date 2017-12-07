@@ -22,7 +22,7 @@ def echo_message(message):
     # bot.reply_to(message, message.text)
     bot.send_message(message.chat.id, message.text)
     bot.send_message(message.chat.id, 
-    	json.dumps(message, sort_keys=True, indent=4, separators=(',', ': '))
+    	json.dumps(message, sort_keys=True, indent=4, separators=(',', ': ')))
 
 
 @bot.message_handler(func=lambda message: True, content_types=['location'])
