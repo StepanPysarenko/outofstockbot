@@ -1,22 +1,24 @@
 import os
-import postgresql
+import psycopg2
 
 class DbServices:
-    db = None
-
+    conn = None
+    cur = None
 
     def __init__(self):
-        db = postgresql.open(os.environ.get('DATABASE_URL'))
+        conn =psycopg2.connect(os.environ.get('DATABASE_URL'))
+        cur = conn.cursor()
 
 
     def create_item(params):
-        ins = db.prepare("INSERT INTO items(latitude, longitude, date) VALUES ($1, $2, $3)")
-        ins(params.latitude, params.longitude, params.date)
+        cur.execute("INSERT INTO items(latitude, longitude, date) VALUES (%s, %s, %s)", 
+        	(params.latitude, params.longitude, params.date))
 
 
     def query_items():
-        return db.query("SELECT * FROM items ORDER BY date DESC")
+    	cur.execute("SELECT * FROM items ORDER BY date DESC")
+		return cur.fetchall()
 
 
     def __del__(self):
-        db.close()
+        conn.close()
