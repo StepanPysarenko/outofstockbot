@@ -1,4 +1,4 @@
-import bot_telegram.bot as bot
+import telegram.bot.bot as bot_telegram
 from flask import Flask, request
 
 app = Flask(__name__)
