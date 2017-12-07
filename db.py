@@ -10,12 +10,10 @@ class DbServices:
 
 	def create_item(params):
         ins = db.prepare("INSERT INTO items(latitude, longitude, date) VALUES ($1, $2, $3)")
-        ins(params.latitude
-        	params.longitude,
-        	params.date)
+        ins(params.latitude, params.longitude, params.date)
 
 
-    def query_items()
+    def query_items():
         return db.query("SELECT * FROM items ORDER BY date DESC")
 
 
