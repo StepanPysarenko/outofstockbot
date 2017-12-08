@@ -19,22 +19,19 @@ class DbServices:
         self.conn.commit()
 
 
-    def query_db(self, query, args=(), one=False):
-        self.cur.execute(query, args)
-        r = [dict((self.cur.description[i][0], value) \
-                   for i, value in enumerate(row)) for row in self.cur.fetchall()]
-        self.cur.connection.close()
-        return (r[0] if r else None) if one else r
-
-
     def query_items(self):
-        result = self.query_db("""
-            SELECT *
+        self.cur.execute("""
+            SELECT 
+                id,
+                date,
+                trim(to_char(latitude, '99D999999')),
+                trim(to_char(longitude, '99D999999'))
             FROM items 
             ORDER BY date DESC 
             LIMIT 100
             """)
-        return "<pre>" + json.dumps(result, sort_keys=True, 
+        items = self.cur.fetchall()
+        return "<pre>" + json.dumps(items, sort_keys=True, 
             indent=4, separators=(',', ': ')) + "</pre>"
 
 
