@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import json
 
 
 class DbServices:
@@ -11,12 +12,12 @@ class DbServices:
 
     def create_item(self, params):
         self.cur.execute("INSERT INTO items(latitude, longitude, date) VALUES (%s, %s, %s)", 
-            (params.latitude, params.longitude, params.current_date))
+            (params.latitude, params.longitude, params.date))
 
 
     def query_items(self):
         self.cur.execute("SELECT * FROM items ORDER BY date DESC")
-        return self.cur.fetchall()
+        return json.dumps(self.cur.fetchall())
 
 
     def __del__(self):
