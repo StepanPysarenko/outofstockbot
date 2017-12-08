@@ -16,7 +16,7 @@ class DbServices:
             VALUES (%s, %s, %s)
             """, 
             (params['date'], params['latitude'], params['longitude']))
-        conn.commit()
+        self.conn.commit()
 
 
     def query_items(self):
