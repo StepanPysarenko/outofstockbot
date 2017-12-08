@@ -19,7 +19,7 @@ class DbServices:
         self.conn.commit()
 
 
-    def query_db(query, args=(), one=False):
+    def query_db(self, query, args=(), one=False):
         self.cur.execute(query, args)
         r = [dict((cur.description[i][0], value) \
                    for i, value in enumerate(row)) for row in cur.fetchall()]
