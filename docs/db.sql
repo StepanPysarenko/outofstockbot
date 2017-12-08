@@ -1,6 +1,6 @@
-CREATE TABLE pq.items(
+CREATE TABLE items(
 	id SERIAL PRIMARY KEY,
+	date int NOT NULL,
 	latitude NUMERIC NOT NULL,
-	longitude NUMERIC NOT NULL,
-	date int NOT NULL
+	longitude NUMERIC NOT NULL	
 )

@@ -11,14 +11,27 @@ class DbServices:
 
 
     def create_item(self, params):
-        self.cur.execute("INSERT INTO items(date, latitude, longitude) VALUES (%s, %s, %s)", 
+        self.cur.execute("""
+            INSERT INTO items(date, latitude, longitude) 
+            VALUES (%s, %s, %s)
+            """, 
             (params['date'], params['latitude'], params['longitude']))
+        conn.commit()
 
 
     def query_items(self):
-        self.cur.execute("SELECT * FROM items ORDER BY date DESC LIMIT 100")
-        return json.dumps(self.cur.fetchall(), sort_keys=True, 
-            indent=4, separators=(',', ': '))
+        self.cur.execute("""
+            SELECT 
+                id,
+                date,
+                to_char(latitude, 'FM999999999999999999'),
+                to_char(longitude, 'FM999999999999999999')
+            FROM items 
+            ORDER BY date DESC 
+            LIMIT 100
+            """)
+        items = self.cur.fetchall()
+        return json.dumps(items, sort_keys=True, indent=4, separators=(',', ': '))
 
 
     def __del__(self):
