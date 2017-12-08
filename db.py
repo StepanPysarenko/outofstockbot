@@ -22,10 +22,10 @@ class DbServices:
     def query_items(self):
         self.cur.execute("""
             SELECT 
-                id,
-                date,
-                to_char(latitude, 'FM999999999999999999'),
-                to_char(longitude, 'FM999999999999999999')
+                id AS id,
+                date AS date,
+                to_char(latitude, '99D999999') AS latitude,
+                to_char(longitude, '99D999999') AS longitude
             FROM items 
             ORDER BY date DESC 
             LIMIT 100
