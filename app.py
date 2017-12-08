@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request
 from db import DbServices
-import telegram.app_telegram
+from telegram import app_telegram
 # import viber.app_viber
 
 
