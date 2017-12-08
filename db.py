@@ -28,7 +28,7 @@ class DbServices:
 
 
     def query_items(self):
-        result = self.uery_db("""
+        result = self.query_db("""
             SELECT *
             FROM items 
             ORDER BY date DESC 
