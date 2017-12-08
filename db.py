@@ -31,7 +31,8 @@ class DbServices:
             LIMIT 100
             """)
         items = self.cur.fetchall()
-        return json.dumps(items, sort_keys=True, indent=4, separators=(',', ': '))
+        return "<pre>" + json.dumps(items, sort_keys=True, 
+            indent=4, separators=(',', ': ')) + "</pre>"
 
 
     def __del__(self):
