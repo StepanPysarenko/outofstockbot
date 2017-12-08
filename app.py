@@ -28,7 +28,7 @@ def echo_message(message):
 def echo_message(message):
     db_services = DbServices()
     db_services.create_item({
-        date: int(time.time()), 
+        current_date: int(time.time()), 
         latitude: message.location.latitude,
         longitude: message.location.longitude
         })

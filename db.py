@@ -11,7 +11,7 @@ class DbServices:
 
     def create_item(self, params):
         self.cur.execute("INSERT INTO items(latitude, longitude, date) VALUES (%s, %s, %s)", 
-            (params.latitude, params.longitude, params.date))
+            (params.latitude, params.longitude, params.current_date))
 
 
     def query_items(self):
