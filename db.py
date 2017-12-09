@@ -18,7 +18,7 @@ class DbServices:
 
     def callproc(self, name, args=()):
         self.cur.callproc(name, args)
-        return self.cur.callproc()
+        return self.cur.fetchall()
 
 
     def commit():
