@@ -12,11 +12,13 @@ class DbServices:
 
         
     def query(self, query, args=()):
-        return self.cur.execute(query, args).fetchall()
+        self.cur.execute(query, args)
+        return self.cur.fetchall()
 
 
     def callproc(self, name, args=()):
-        return self.cur.callproc(name, args).fetchall()
+        self.cur.callproc(query, args)
+        return self.cur.callproc()
 
 
     def commit():
