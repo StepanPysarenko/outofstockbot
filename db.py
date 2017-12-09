@@ -21,7 +21,7 @@ class DbServices:
         return self.cur.fetchall()
 
 
-    def commit():
+    def commit(self):
         self.conn.commit()
 
 
