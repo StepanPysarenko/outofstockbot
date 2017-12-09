@@ -12,9 +12,9 @@ app.register_blueprint(app_telegram)
 
 @app.route("/items")
 def get_items():
-    db_services = DbServices()
-    items = db_services.query_items()
-    return items, 200
+    items = DbServices().callproc('get_items', (100,))
+    result = "<pre>" + json.dumps(items, indent=4) + "</pre>"   
+    return result, 200
 
 
 app.run(host="0.0.0.0", port=os.environ.get('PORT', 17995))
