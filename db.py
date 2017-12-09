@@ -17,7 +17,7 @@ class DbServices:
 
 
     def callproc(self, name, args=()):
-        self.cur.callproc(query, args)
+        self.cur.callproc(name, args)
         return self.cur.callproc()
 
 
