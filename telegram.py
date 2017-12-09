@@ -35,7 +35,7 @@ def oos(message):
 
 
 def oos_step2(message):
-    names = [message.text + '/1', message.text + '/2']
+    names = [message.text + '.1', message.text + '.2']
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     keyboard.add(*[types.KeyboardButton(name) for name in names])
     msg = bot.send_message(message.chat.id, 'Please select subitem', 
@@ -44,7 +44,19 @@ def oos_step2(message):
 
 
 def oos_step3(message):
-    bot.send_message(message.chat.id, 'You selected ' + message.text)
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    keyboard.add(types.KeyboardButton("Code"))
+    keyboard.add(types.KeyboardButton("Location", request_location=True))   
+    msg = bot.send_message(message.chat.id, 'You selected ' + message.text,
+        reply_markup=keyboard)
+    bot.register_next_step_handler(msg, oos_step4)
+
+
+def oos_step4(message):
+    markup = types.ReplyKeyboardRemove(selective=False)
+    bot.send_message(message.chat.id, 
+        str(message.location.latitude) + ', ' + str(message.location.longitude),
+        reply_markup=markup)
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
