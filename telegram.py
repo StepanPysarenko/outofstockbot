@@ -25,16 +25,25 @@ def help(message):
 
 @bot.message_handler(commands=['oos'])
 def oos(message):
-    brand_names = ['Brand 1', 'Brand 2', 'Brand 3', 'Brand 4', 'Brand 5']
-
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboard.add(*[types.KeyboardButton(name) for name in brand_names])
-    msg = bot.send_message(message.chat.id, 'Please select brand', reply_markup=keyboard)
+    names = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    keyboard.add(*[types.KeyboardButton(name) for name in names])
+    msg = bot.send_message(message.chat.id, 'Please select item', 
+        reply_markup=keyboard)
     
-    bot.register_next_step_handler(msg, oos_next_step)
+    bot.register_next_step_handler(msg, oos_step2)
 
 
-def oos_next_step(message):
+def oos_step2(message):
+    names = [message.text + '/1', message.text + '/2']
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    keyboard.add(*[types.KeyboardButton(name) for name in names])
+    msg = bot.send_message(message.chat.id, 'Please select subitem', 
+        reply_markup=keyboard)   
+    bot.register_next_step_handler(msg, oos_step3)
+
+
+def oos_step3(message):
     bot.send_message(message.chat.id, 'You selected ' + message.text)
 
 
