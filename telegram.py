@@ -25,6 +25,7 @@ def help(message):
 def oos(message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*[types.KeyboardButton(name) for name in ['Brand 1', 'Brand 2']])
+    bot.send_message(message.chat.id, 'Please select brand', reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
