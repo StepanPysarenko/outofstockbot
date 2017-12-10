@@ -27,35 +27,35 @@ def help(message):
 
 
 @bot.message_handler(commands=['oos'])
-def oos(message):
+def oos_step_1(message):
     names = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     keyboard.add(*[types.KeyboardButton(name) for name in names])
     msg = bot.send_message(message.chat.id, 'Please select item', 
         reply_markup=keyboard)
     
-    bot.register_next_step_handler(msg, oos_step2)
+    bot.register_next_step_handler(msg, oos_step_2)
 
 
-def oos_step2(message):
+def oos_step_2(message):
     names = [message.text + '.1', message.text + '.2']
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     keyboard.add(*[types.KeyboardButton(name) for name in names])
     msg = bot.send_message(message.chat.id, 'Please select subitem', 
         reply_markup=keyboard)   
-    bot.register_next_step_handler(msg, oos_step3)
+    bot.register_next_step_handler(msg, oos_step_3)
 
 
-def oos_step3(message):
+def oos_step_3(message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     keyboard.add(types.KeyboardButton("Code"))
     keyboard.add(types.KeyboardButton("Location", request_location=True))   
     msg = bot.send_message(message.chat.id, 'You selected ' + message.text,
         reply_markup=keyboard)
-    bot.register_next_step_handler(msg, oos_step4)
+    bot.register_next_step_handler(msg, oos_step_4)
 
 
-def oos_step4(message):
+def oos_step_4(message):
     save_location(message)
     markup = types.ReplyKeyboardRemove(selective=False)
     bot.send_message(message.chat.id, 

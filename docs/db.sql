@@ -5,23 +5,6 @@ CREATE TABLE items(
 	longitude NUMERIC NOT NULL	
 );
 
---CREATE OR REPLACE FUNCTION plpgsql_get_items(limit_num numeric=100)
---    RETURNS refcursor AS $$
---    DECLARE
---      	ref refcursor;
---    BEGIN
---	    OPEN ref FOR SELECT
---	        id AS id,
---	        date AS date,
---	        trim(to_char(latitude, '99D999999')) AS latitude,
---	        trim(to_char(longitude, '99D999999')) AS longitude
---	    FROM items
---	    ORDER BY date DESC
---	    LIMIT limit_num;
---	    RETURN ref;
---    END;
---    $$ LANGUAGE plpgsql;
-
 
 CREATE OR REPLACE FUNCTION get_items(limit_num numeric=100)
     RETURNS TABLE(if int, date int, latitude text, longitude text) AS
@@ -29,8 +12,8 @@ CREATE OR REPLACE FUNCTION get_items(limit_num numeric=100)
          SELECT
 	        id AS id,
 	        date AS date,
-	        trim(to_char(latitude, '99D999999')) AS latitude,
-	        trim(to_char(longitude, '99D999999')) AS longitude
+	        trim(to_char(latitude, '99D9999999')) AS latitude,
+	        trim(to_char(longitude, '99D9999999')) AS longitude
 	    FROM items
 	    ORDER BY date DESC
 	    LIMIT limit_num;
