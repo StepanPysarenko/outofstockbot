@@ -40,7 +40,7 @@ def incoming():
             TextMessage(text="Thanks for subscribing!")
         ])
 
-    return "!", 200
+    return Response(status=200)
 
 
 @app_viber.route(URL_PEFIX + '/set_webhook')
