@@ -1,14 +1,13 @@
 import os
 import time
 import telebot
-import json
 from telebot import types
 from db import DbServices
 from flask import Blueprint, request, render_template, session, abort
 
 BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 BASE_URL = os.environ.get('BASE_URL') 
-URL_PEFIX = '/telegram'
+URL_PREFIX = '/telegram'
 
 
 app_telegram = Blueprint('app_telegram',__name__)
@@ -76,24 +75,24 @@ def echo_message(message):
         message.location.latitude,
         message.location.longitude))
     db.commit()
-    bot.send_message(message.chat.id, 
+    bot.send_message(message.chat.id,
     	str(message.location.latitude) + ', ' + str(message.location.longitude))
 
 
-@app_telegram.route(URL_PEFIX + '/' + BOT_TOKEN, methods=['POST'])
+@app_telegram.route(URL_PREFIX + '/' + BOT_TOKEN, methods=['POST'])
 def webhook():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
 
-@app_telegram.route(URL_PEFIX + '/set_webhook')
+@app_telegram.route(URL_PREFIX + '/set_webhook')
 def set_webhook():
     bot.remove_webhook()
-    bot.set_webhook(url=BASE_URL + URL_PEFIX + '/' + BOT_TOKEN)
+    bot.set_webhook(url=BASE_URL + URL_PREFIX + '/' + BOT_TOKEN)
     return "!", 200
 
 
-@app_telegram.route(URL_PEFIX + '/remove_webhook')
+@app_telegram.route(URL_PREFIX + '/remove_webhook')
 def remove_webhook():
     bot.remove_webhook()
     return "!", 200
