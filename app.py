@@ -19,4 +19,4 @@ def get_items():
     return result, 200
 
 
-app.run()
+app.run(host="0.0.0.0", port=os.environ.get('PORT'))
