@@ -92,7 +92,6 @@ def webhook():
 
 @app_telegram.route(URL_PREFIX + '/set_webhook')
 def set_webhook():
-    bot.remove_webhook()
     bot.set_webhook(url=BASE_URL + URL_PREFIX + '/' + BOT_TOKEN)
     return "!", 200
 

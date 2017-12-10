@@ -39,12 +39,12 @@ def incoming():
             db = DbServices()
             db.callproc('add_item', (
                 int(time.time()),
-                viber_request.message.location.lat,
-                viber_request.message.location.lon))
+                viber_request.message.location.latitude,
+                viber_request.message.location.longitude))
             db.commit()
             bot.send_messages(viber_request.sender.id, [
-                TextMessage(text=str(viber_request.message.location.lat)
-                            + ', ' + str(viber_request.message.location.lat))
+                TextMessage(text=str(viber_request.message.location.latitude)
+                            + ', ' + str(viber_request.message.location.longitude))
             ])
         else:
             bot.send_messages(viber_request.sender.id, [viber_request.message])
@@ -59,7 +59,6 @@ def incoming():
 
 @app_viber.route(URL_PREFIX + '/set_webhook')
 def set_webhook():
-    bot.unset_webhook()
     bot.set_webhook(BASE_URL + URL_PREFIX + '/' + BOT_TOKEN)
     return "!", 200
 
