@@ -14,7 +14,7 @@ from flask import Blueprint, request, render_template, session, abort
 from db import DbServices
 
 BOT_TOKEN = os.environ.get('VIBER_BOT_TOKEN')
-BOT_NAME = 'OutOfStockBot' # os.environ.get('VIBER_BOT_NAME') 
+BOT_NAME = os.environ.get('VIBER_BOT_NAME') 
 BASE_URL = os.environ.get('BASE_URL') 
 URL_PEFIX = '/viber'
 

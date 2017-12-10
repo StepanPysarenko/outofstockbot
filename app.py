@@ -3,12 +3,12 @@ import json
 from flask import Flask, request
 from db import DbServices
 from telegram import app_telegram
-# import viber.app_viber
+from telegram import app_viber
 
 
 app = Flask(__name__)
 app.register_blueprint(app_telegram)
-# app.register_blueprint(app_viber)
+app.register_blueprint(app_viber)
 
 
 @app.route("/items")
