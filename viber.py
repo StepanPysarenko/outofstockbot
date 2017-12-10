@@ -2,7 +2,6 @@ import os
 import time
 from viberbot import Api
 from viberbot.api.bot_configuration import BotConfiguration
-from viberbot.api import Message
 from viberbot.api.messages import VideoMessage
 from viberbot.api.messages import LocationMessage
 from viberbot.api.messages.data_types.location import Location
@@ -36,7 +35,6 @@ def incoming():
     viber_request = bot.parse_request(request.get_data())
 
     if isinstance(viber_request, ViberMessageRequest):
-        msg = None
         if isinstance(viber_request.message, LocationMessage):
             db = DbServices()
             db.callproc('add_item', (
@@ -44,12 +42,13 @@ def incoming():
                 viber_request.message.location.lat,
                 viber_request.message.location.lon))
             db.commit()
-
-            msg = TextMessage(text=str(viber_request.message.location.lat)
-                + ', ' + str(viber_request.message.location.lon))
+            bot.send_messages(viber_request.sender.id, [
+                TextMessage(text=str(viber_request.message.location.lat)
+                            + ', ' + str(viber_request.message.location.lat))
+            ])
         else:
-            msg = viber_request.message
-        bot.send_messages(viber_request.sender.id, [msg])
+            bot.send_messages(viber_request.sender.id, [viber_request.message])
+
     elif isinstance(viber_request, ViberSubscribedRequest):
         bot.send_messages(viber_request.get_user.id, [
             TextMessage(text="Thanks for subscribing!")
