@@ -22,7 +22,9 @@ app_viber = Blueprint('app_viber',__name__)
 
 
 bot_configuration = BotConfiguration(
-    name=BOT_NAME, auth_token=BOT_TOKEN)
+    name=BOT_NAME, 
+    avatar='http://cte.tamu.edu/getattachment/Fellows-and-Scholars/Montague-CTE-Scholars/Past-Years-Scholars/1995-1996-Scholars/temporary-profile-placeholder-(1).jpg.aspx',
+    auth_token=BOT_TOKEN)
 bot = Api(bot_configuration)
 
 
