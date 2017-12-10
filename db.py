@@ -6,6 +6,7 @@ class DbServices:
     conn = None
     cur = None
 
+
     def __init__(self):
         self.conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
         self.cur = self.conn.cursor()

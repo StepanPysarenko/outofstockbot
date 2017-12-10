@@ -56,6 +56,7 @@ def oos_step3(message):
 
 
 def oos_step4(message):
+    save_location(message)
     markup = types.ReplyKeyboardRemove(selective=False)
     bot.send_message(message.chat.id, 
         str(message.location.latitude) + ', ' + str(message.location.longitude),
@@ -68,15 +69,19 @@ def echo_message(message):
 
 
 @bot.message_handler(func=lambda message: True, content_types=['location'])
-def echo_message(message):
+def location_message(message):
+    save_location(message)
+    bot.send_message(message.chat.id,
+    	str(message.location.latitude) + ', ' + str(message.location.longitude))
+
+
+def save_location(message):
     db = DbServices()
     db.callproc('add_item', (
         int(time.time()),
         message.location.latitude,
         message.location.longitude))
     db.commit()
-    bot.send_message(message.chat.id,
-    	str(message.location.latitude) + ', ' + str(message.location.longitude))
 
 
 @app_telegram.route(URL_PREFIX + '/' + BOT_TOKEN, methods=['POST'])

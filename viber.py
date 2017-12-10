@@ -12,6 +12,8 @@ from viberbot.api.viber_requests import ViberUnsubscribedRequest
 from flask import Blueprint, request, Response, render_template, session, abort
 from db import DbServices
 
+import logging
+
 BOT_TOKEN = os.environ.get('VIBER_BOT_TOKEN')
 BOT_NAME = os.environ.get('VIBER_BOT_NAME') 
 BASE_URL = os.environ.get('BASE_URL') 
@@ -40,17 +42,18 @@ def incoming():
             TextMessage(text="Thanks for subscribing!")
         ])
 
-    return Response(status=200)
+    return "!", 200
 
 
 @app_viber.route(URL_PREFIX + '/set_webhook')
 def set_webhook():
-    bot.unset_webhook()
+    # bot.unset_webhook()
     bot.set_webhook(BASE_URL + URL_PREFIX + '/' + BOT_TOKEN)
-    return Response(status=200)
+    return "!", 200
 
 
 @app_viber.route(URL_PREFIX + '/remove_webhook')
 def remove_webhook():
     bot.unset_webhook()
-    return Response(status=200)
+    return "!", 200
+
