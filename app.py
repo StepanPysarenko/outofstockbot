@@ -14,9 +14,8 @@ app.register_blueprint(app_viber)
 @app.route("/items")
 def get_items():
     items = DbServices().callproc('get_items', (100,))
-    print(items)
-    result = "<pre>" + json.dumps(items, sort_keys=True, 
-        indent=4, separators=(',', ': ')) + "</pre>"   
+    result = "<pre>" + json.dumps(items, sort_keys=True,
+        indent=4, separators=(',', ': ')) + "</pre>"
     return result, 200
 
 

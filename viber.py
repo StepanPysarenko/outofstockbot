@@ -2,7 +2,10 @@ import os
 import time
 from viberbot import Api
 from viberbot.api.bot_configuration import BotConfiguration
+from viberbot.api import Message
 from viberbot.api.messages import VideoMessage
+from viberbot.api.messages import LocationMessage
+from viberbot.api.messages.data_types.location import Location
 from viberbot.api.messages.text_message import TextMessage
 from viberbot.api.viber_requests import ViberConversationStartedRequest
 from viberbot.api.viber_requests import ViberFailedRequest
@@ -12,7 +15,6 @@ from viberbot.api.viber_requests import ViberUnsubscribedRequest
 from flask import Blueprint, request, Response, render_template, session, abort
 from db import DbServices
 
-import logging
 
 BOT_TOKEN = os.environ.get('VIBER_BOT_TOKEN')
 BOT_NAME = os.environ.get('VIBER_BOT_NAME') 
@@ -34,9 +36,20 @@ def incoming():
     viber_request = bot.parse_request(request.get_data())
 
     if isinstance(viber_request, ViberMessageRequest):
-        bot.send_messages(viber_request.sender.id, [
-            viber_request.message
-        ])
+        msg = None
+        if isinstance(viber_request.message, LocationMessage):
+            db = DbServices()
+            db.callproc('add_item', (
+                int(time.time()),
+                viber_request.message.location.lat,
+                viber_request.message.location.lon))
+            db.commit()
+
+            msg = TextMessage(text=str(viber_request.message.location.lat)
+                + ', ' + str(viber_request.message.location.lon))
+        else:
+            msg = viber_request.message
+        bot.send_messages(viber_request.sender.id, [msg])
     elif isinstance(viber_request, ViberSubscribedRequest):
         bot.send_messages(viber_request.get_user.id, [
             TextMessage(text="Thanks for subscribing!")
@@ -47,7 +60,7 @@ def incoming():
 
 @app_viber.route(URL_PREFIX + '/set_webhook')
 def set_webhook():
-    # bot.unset_webhook()
+    bot.unset_webhook()
     bot.set_webhook(BASE_URL + URL_PREFIX + '/' + BOT_TOKEN)
     return "!", 200
 
