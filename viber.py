@@ -13,19 +13,20 @@ from viberbot.api.viber_requests import ViberUnsubscribedRequest
 from flask import Blueprint, request, render_template, session, abort
 from db import DbServices
 
+BOT_TOKEN = os.environ.get('VIBER_BOT_TOKEN')
+BOT_NAME = 'OutOfStockBot' # os.environ.get('VIBER_BOT_NAME') 
+BASE_URL = os.environ.get('BASE_URL') 
+URL_PEFIX = '/viber'
 
 app_viber = Blueprint('app_viber',__name__)
 
 
 bot_configuration = BotConfiguration(
-    name=os.environ.get('VIBER_BOT_NAME')
-    auth_token=os.environ.get('VIBER_BOT_TOKEN')
-)
+    name=BOT_NAME, auth_token=BOT_TOKEN)
 bot = Api(bot_configuration)
 
 
-
-@app.route('/', methods=['POST'])
+@app_viber.route(URL_PEFIX + '/' + BOT_TOKEN, methods=['POST'])
 def incoming():
     logger.debug("received request. post data: {0}".format(request.get_data()))
     # every viber message is signed, you can verify the signature using this method
@@ -49,3 +50,16 @@ def incoming():
         logger.warn("client failed receiving message. failure: {0}".format(viber_request))
 
     return Response(status=200)
+
+
+@app_viber.route(URL_PEFIX + '/set_webhook')
+def set_webhook():
+    bot.unset_webhook()
+    bot.set_webhook(BASE_URL + URL_PEFIX + '/' + BOT_TOKEN)
+    return "!", 200
+
+
+@app_viber.route(URL_PEFIX + '/remove_webhook')
+def remove_webhook():
+    bot.unset_webhook()
+    return "!", 200

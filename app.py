@@ -14,7 +14,7 @@ app.register_blueprint(app_telegram)
 @app.route("/items")
 def get_items():
     items = DbServices().callproc('get_items', (100,))
-    result = "<pre>" + json.dumps(items, indent=4) + "</pre>"   
+    result = "<pre>" + json.dumps(items) + "</pre>"   
     return result, 200
 
 
