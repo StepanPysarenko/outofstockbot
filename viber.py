@@ -17,7 +17,7 @@ BOT_NAME = os.environ.get('VIBER_BOT_NAME')
 BASE_URL = os.environ.get('BASE_URL') 
 URL_PEFIX = '/viber'
 
-app = Blueprint('app',__name__)
+app_viber = Blueprint('app_viber',__name__)
 
 
 bot_configuration = BotConfiguration(
@@ -27,7 +27,7 @@ bot_configuration = BotConfiguration(
 bot = Api(bot_configuration)
 
 
-@app.route(URL_PEFIX + '/' + BOT_TOKEN, methods=['POST'])
+@app_viber.route(URL_PEFIX + '/' + BOT_TOKEN, methods=['POST'])
 def incoming():
     viber_request = bot.parse_request(request.get_data())
 
@@ -43,14 +43,14 @@ def incoming():
     return "!", 200
 
 
-@app.route(URL_PEFIX + '/set_webhook')
+@app_viber.route(URL_PEFIX + '/set_webhook')
 def set_webhook():
     bot.unset_webhook()
     bot.set_webhook(BASE_URL + URL_PEFIX + '/' + BOT_TOKEN)
     return "!", 200
 
 
-@app.route(URL_PEFIX + '/remove_webhook')
+@app_viber.route(URL_PEFIX + '/remove_webhook')
 def remove_webhook():
     bot.unset_webhook()
     return "!", 200

@@ -11,7 +11,7 @@ BASE_URL = os.environ.get('BASE_URL')
 URL_PEFIX = '/telegram'
 
 
-app = Blueprint('app',__name__)
+app_telegram = Blueprint('app_telegram',__name__)
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -80,20 +80,20 @@ def echo_message(message):
     	str(message.location.latitude) + ', ' + str(message.location.longitude))
 
 
-@app.route(URL_PEFIX + '/' + BOT_TOKEN, methods=['POST'])
+@app_telegram.route(URL_PEFIX + '/' + BOT_TOKEN, methods=['POST'])
 def webhook():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
 
-@app.route(URL_PEFIX + '/set_webhook')
+@app_telegram.route(URL_PEFIX + '/set_webhook')
 def set_webhook():
     bot.remove_webhook()
     bot.set_webhook(url=BASE_URL + URL_PEFIX + '/' + BOT_TOKEN)
     return "!", 200
 
 
-@app.route(URL_PEFIX + '/remove_webhook')
+@app_telegram.route(URL_PEFIX + '/remove_webhook')
 def remove_webhook():
     bot.remove_webhook()
     return "!", 200

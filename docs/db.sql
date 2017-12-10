@@ -11,10 +11,10 @@ CREATE OR REPLACE FUNCTION get_items(limit_num numeric=100)
       	ref refcursor;
     BEGIN
 	    OPEN ref FOR SELECT 
-	        id,
-	        date,
-	        trim(to_char(latitude, '99D999999')),
-	        trim(to_char(longitude, '99D999999'))
+	        id AS id,
+	        date AS date,
+	        trim(to_char(latitude, '99D999999')) AS latitude,
+	        trim(to_char(longitude, '99D999999')) AS longitude
 	    FROM items 
 	    ORDER BY date DESC 
 	    LIMIT limit_num;
