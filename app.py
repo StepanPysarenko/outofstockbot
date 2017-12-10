@@ -2,8 +2,8 @@ import os
 import json
 from flask import Flask, request
 from db import DbServices
-from telegram import app_telegram
-from viber import app_viber
+from telegram import app as app_telegram
+from viber import app as app_viber
 
 
 app = Flask(__name__)
