@@ -20,6 +20,21 @@ CREATE OR REPLACE FUNCTION get_items(limit_num numeric=100)
     $BODY$
     LANGUAGE sql;
 
+    CREATE OR REPLACE FUNCTION get_items(offset_num numeric=0, limit_num numeric=100)
+    RETURNS TABLE(id int, date int, latitude numeric, longitude numeric) AS
+    $BODY$
+         SELECT
+	        id AS id,
+	        date AS date,
+	        latitude AS latitude,
+	        longitude AS longitude
+	    FROM items
+	    ORDER BY date DESC
+	    OFFSET offset_num
+	    LIMIT limit_num;
+    $BODY$
+    LANGUAGE sql;
+
 
 CREATE OR REPLACE FUNCTION add_item(date INT, latitude NUMERIC, longitude NUMERIC) 
     RETURNS void AS

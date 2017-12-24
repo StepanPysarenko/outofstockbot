@@ -10,7 +10,7 @@ BASE_URL = os.environ.get('BASE_URL')
 URL_PREFIX = '/telegram'
 
 
-app_telegram = Blueprint('app_telegram',__name__)
+app_telegram = Blueprint('app_telegram', __name__)
 
 bot = telebot.TeleBot(BOT_TOKEN)
 

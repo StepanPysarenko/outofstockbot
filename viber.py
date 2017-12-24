@@ -20,7 +20,7 @@ BOT_NAME = os.environ.get('VIBER_BOT_NAME')
 BASE_URL = os.environ.get('BASE_URL') 
 URL_PREFIX = '/viber'
 
-app_viber = Blueprint('app_viber',__name__)
+app_viber = Blueprint('app_viber', __name__)
 
 
 bot_configuration = BotConfiguration(
