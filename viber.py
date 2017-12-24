@@ -17,10 +17,9 @@ from db import DbServices
 
 BOT_TOKEN = os.environ.get('VIBER_BOT_TOKEN')
 BOT_NAME = os.environ.get('VIBER_BOT_NAME') 
-BASE_URL = os.environ.get('BASE_URL') 
-URL_PREFIX = '/viber'
+BASE_URL = os.environ.get('BASE_URL')
 
-app_viber = Blueprint('app_viber', __name__)
+app = Blueprint('app_viber', __name__)
 
 
 bot_configuration = BotConfiguration(
@@ -30,7 +29,7 @@ bot_configuration = BotConfiguration(
 bot = Api(bot_configuration)
 
 
-@app_viber.route(URL_PREFIX + '/' + BOT_TOKEN, methods=['POST'])
+@app.route('/' + BOT_TOKEN, methods=['POST'])
 def incoming():
     viber_request = bot.parse_request(request.get_data())
 
@@ -57,13 +56,13 @@ def incoming():
     return "!", 200
 
 
-@app_viber.route(URL_PREFIX + '/set_webhook')
+@app.route('/set_webhook')
 def set_webhook():
-    bot.set_webhook(BASE_URL + URL_PREFIX + '/' + BOT_TOKEN)
+    bot.set_webhook(BASE_URL + '/' + BOT_TOKEN)
     return "!", 200
 
 
-@app_viber.route(URL_PREFIX + '/remove_webhook')
+@app.route('/remove_webhook')
 def remove_webhook():
     bot.unset_webhook()
     return "!", 200
