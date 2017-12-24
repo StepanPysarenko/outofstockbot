@@ -3,7 +3,7 @@ import time
 import telebot
 from telebot import types
 from db import DbServices
-from flask import Blueprint, request, render_template, session, abort
+from flask import Blueprint, request
 
 BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 BASE_URL = os.environ.get('BASE_URL')
@@ -91,7 +91,7 @@ def webhook():
 
 @app.route('/set_webhook')
 def set_webhook():
-    bot.set_webhook(url=BASE_URL + '/' + BOT_TOKEN)
+    bot.set_webhook(url=BASE_URL + '/telegram/' + BOT_TOKEN)
     return "!", 200
 
 

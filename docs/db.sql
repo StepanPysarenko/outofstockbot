@@ -6,21 +6,7 @@ CREATE TABLE items(
 );
 
 
-CREATE OR REPLACE FUNCTION get_items(limit_num numeric=100)
-    RETURNS TABLE(if int, date int, latitude text, longitude text) AS
-    $BODY$
-         SELECT
-	        id AS id,
-	        date AS date,
-	        trim(to_char(latitude, '99D9999999')) AS latitude,
-	        trim(to_char(longitude, '99D9999999')) AS longitude
-	    FROM items
-	    ORDER BY date DESC
-	    LIMIT limit_num;
-    $BODY$
-    LANGUAGE sql;
-
-    CREATE OR REPLACE FUNCTION get_items(offset_num numeric=0, limit_num numeric=100)
+CREATE OR REPLACE FUNCTION get_items(offset_val numeric=0, limit_val numeric=100)
     RETURNS TABLE(id int, date int, latitude numeric, longitude numeric) AS
     $BODY$
          SELECT
@@ -30,8 +16,8 @@ CREATE OR REPLACE FUNCTION get_items(limit_num numeric=100)
 	        longitude AS longitude
 	    FROM items
 	    ORDER BY date DESC
-	    OFFSET offset_num
-	    LIMIT limit_num;
+	    OFFSET offset_val
+	    LIMIT limit_val;
     $BODY$
     LANGUAGE sql;
 

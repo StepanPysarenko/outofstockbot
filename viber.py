@@ -1,17 +1,16 @@
 import os
 import time
+
 from viberbot import Api
 from viberbot.api.bot_configuration import BotConfiguration
-from viberbot.api.messages import VideoMessage
-from viberbot.api.messages import LocationMessage
+from viberbot.api.messages import VideoMessage,  LocationMessage
 from viberbot.api.messages.data_types.location import Location
 from viberbot.api.messages.text_message import TextMessage
-from viberbot.api.viber_requests import ViberConversationStartedRequest
-from viberbot.api.viber_requests import ViberFailedRequest
-from viberbot.api.viber_requests import ViberMessageRequest
-from viberbot.api.viber_requests import ViberSubscribedRequest
-from viberbot.api.viber_requests import ViberUnsubscribedRequest
-from flask import Blueprint, request, Response, render_template, session, abort
+from viberbot.api.viber_requests import ViberMessageRequest, ViberSubscribedRequest, \
+    ViberUnsubscribedRequest, ViberConversationStartedRequest, ViberFailedRequest
+
+
+from flask import Blueprint, request
 from db import DbServices
 
 
@@ -58,7 +57,7 @@ def incoming():
 
 @app.route('/set_webhook')
 def set_webhook():
-    bot.set_webhook(BASE_URL + '/' + BOT_TOKEN)
+    bot.set_webhook(BASE_URL + '/viber/' + BOT_TOKEN)
     return "!", 200
 
 

@@ -1,5 +1,6 @@
 import os
 import psycopg2
+from psycopg2 import extras
 
 
 class DbServices:
@@ -9,7 +10,7 @@ class DbServices:
 
     def __init__(self):
         self.conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
-        self.cur = self.conn.cursor()#cursor_factory=psycopg2.extras.DictCursor)
+        self.cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         
     def query(self, query, args=()):
