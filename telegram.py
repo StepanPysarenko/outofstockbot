@@ -5,13 +5,10 @@ from telebot import types
 from db import DbServices
 from flask import Blueprint, request
 
-BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-BASE_URL = os.environ.get('BASE_URL')
 
+app_telegram = Blueprint('app_telegram', __name__)
 
-app = Blueprint('app_telegram', __name__)
-
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot(os.environ.get('TELEGRAM_BOT_TOKEN'))
 
 
 @bot.message_handler(commands=['start'])
@@ -83,19 +80,19 @@ def save_location(message):
     db.commit()
 
 
-@app.route('/' + BOT_TOKEN, methods=['POST'])
+@app_telegram.route('/' + BOT_TOKEN, methods=['POST'])
 def webhook():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
 
-@app.route('/set_webhook')
+@app_telegram.route('/set_webhook')
 def set_webhook():
-    bot.set_webhook(url=BASE_URL + '/telegram/' + BOT_TOKEN)
+    bot.set_webhook(url=os.environ.get('TELEGRAM_HOOK_URL'))
     return "!", 200
 
 
-@app.route('/remove_webhook')
+@app_telegram.route('/remove_webhook')
 def remove_webhook():
     bot.remove_webhook()
     return "!", 200

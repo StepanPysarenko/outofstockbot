@@ -1,8 +1,8 @@
 import os
 from flask import Flask
-from telegram import app as app_telegram
-from viber import app as app_viber
-from results import app as app_results
+from telegram import app_telegram
+from viber import app_viber
+from results import app_results
 
 app = Flask(__name__)
 app.register_blueprint(app_telegram, url_prefix='/telegram')
