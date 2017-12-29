@@ -5,10 +5,10 @@ from db import DbServices
 from flask import Blueprint, request, render_template, session, abort
 
 
-app = Blueprint('app_results', __name__)
+app_results = Blueprint('app_results', __name__)
 
 
-@app.route("/items")
+@app_results.route("/items")
 def get_items():
 
     page = 1 if (request.args.get('page') is None) else int(request.args.get('page'))
