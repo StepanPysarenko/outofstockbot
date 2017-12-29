@@ -25,3 +25,11 @@ def get_items():
 
     return render_template('items.html', items=items)
 
+
+@app_results.route("/clear")
+def clear():
+    db = DbServices()
+    db.query('DELETE FROM items;')
+    db.commit()
+    return "Cleared", 200
+
