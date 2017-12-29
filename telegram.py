@@ -80,7 +80,7 @@ def save_location(message):
     db.commit()
 
 
-@app_telegram.route('/' + BOT_TOKEN, methods=['POST'])
+@app_telegram.route('/' + os.environ.get('TELEGRAM_BOT_TOKEN'), methods=['POST'])
 def webhook():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200

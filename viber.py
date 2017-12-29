@@ -21,7 +21,7 @@ bot_configuration = BotConfiguration(
 bot = Api(bot_configuration)
 
 
-@app_viber.route('/' + BOT_TOKEN, methods=['POST'])
+@app_viber.route('/' + os.environ.get('VIBER_BOT_TOKEN'), methods=['POST'])
 def incoming():
     viber_request = bot.parse_request(request.get_data())
 
