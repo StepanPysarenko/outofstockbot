@@ -26,7 +26,7 @@ def get_items():
     return render_template('items.html', items=items)
 
 
-@app_results.route("/clear")
+@app_results.route("/items/clear")
 def clear():
     db = DbServices()
     db.query('DELETE FROM items;')

@@ -15,18 +15,16 @@ class DbServices:
         
     def query(self, query, args=()):
         self.cur.execute(query, args)
-        result = None
-        if self.cur.description is not None:
-            result = self.cur.fetchall()
-        return result
+        return self.__fetchcursor()
 
 
     def callproc(self, name, args=()):
         self.cur.callproc(name, args)
-        result = None
-        if self.cur.description is not None:
-            result = self.cur.fetchall()
-        return result
+        return self.__fetchcursor()
+
+
+    def __fetchcursor(self):
+        return self.cur.fetchall() if (self.cur.description is not None) else None
 
 
     def commit(self):
